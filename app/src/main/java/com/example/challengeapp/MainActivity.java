@@ -58,53 +58,20 @@ public class MainActivity extends AppCompatActivity {
         checkboxAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
+                if (isChecked)
                     agreement = true;
-                }else {
+                else
                     agreement = false;
-                }
             }
         });
 
-        final RegistryForm myRegistry = new RegistryForm();
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (agreement) {
-                    invalidName.setVisibility(View.GONE);
-                    invalidEmail.setVisibility(View.GONE);
-                    invalidPassword.setVisibility(View.GONE);
-                    invalidMatch.setVisibility(View.GONE);
-
-                    myRegistry.setName(txtName.getText().toString());
-                    myRegistry.setEmail(txtEmail.getText().toString());
-                    myRegistry.setPassword(txtPassword.getText().toString());
-                    myRegistry.setRePassword(txtRe.getText().toString());
-                    if (myRegistry.isValid()){
-                        Toast.makeText(MainActivity.this, "Registered", Toast.LENGTH_SHORT).show();
-                    }else{
-                        if(!myRegistry.getValidName()) {
-                            invalidName.setVisibility(View.VISIBLE);
-                            Log.d(TAG,"Name not valid");
-                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }else if (!myRegistry.getValidEmail()){
-                            invalidEmail.setVisibility(View.VISIBLE);
-                            Log.d(TAG,"Email not valid");
-                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }else if (!myRegistry.getValidPassword()){
-                            Log.d(TAG,"Pw not valid");
-                            invalidPassword.setVisibility(View.VISIBLE);
-                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }else if(!myRegistry.getValidRePassword()){
-                            Log.d(TAG,"Does not match");
-                            invalidMatch.setVisibility(View.VISIBLE);
-                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
-                        myRegistry.validateData();
-                    }
-                }else {
+                if (agreement)
+                    validateRegistration();
+                else
                     Toast.makeText(MainActivity.this, "Agree to the License", Toast.LENGTH_SHORT).show();
-                }
             }
         });
         btnSetImage.setOnClickListener(new View.OnClickListener() {
@@ -141,5 +108,34 @@ public class MainActivity extends AppCompatActivity {
 
         btnRegister = findViewById(R.id.btnRegister);
         btnSetImage = findViewById(R.id.btnPickImage);
+    }
+
+    public void validateRegistration() {
+        invalidName.setVisibility(View.GONE);
+        invalidEmail.setVisibility(View.GONE);
+        invalidPassword.setVisibility(View.GONE);
+        invalidMatch.setVisibility(View.GONE);
+        System.out.println("still false");
+        if (txtName.getText().toString().isEmpty()) {
+            invalidName.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Name not valid");
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        } else if (!txtEmail.getText().toString().contains("@")) {
+            invalidEmail.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Email not valid");
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        } else if (txtPassword.getText().toString().isEmpty()) {
+            Log.d(TAG, "Pw not valid");
+            invalidPassword.setVisibility(View.VISIBLE);
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        } else if (!txtRe.getText().toString().equals(txtPassword.getText().toString())) {
+            Log.d(TAG, "Does not match");
+            invalidMatch.setVisibility(View.VISIBLE);
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        } else {
+            System.out.println("good");
+            Toast.makeText(MainActivity.this, "Registered", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

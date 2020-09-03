@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ChallengeApp</string>
+    <string name="agreement">This is our license agreement. You can share this app anywhere that you want and use it however you want. Just remember to enjoy.</string>
+    <string-array name="countries">
+        <item>Argentina</item>
+        <item>China</item>
+        <item>Italy</item>
+        <item>Russia</item>
+        <item>United States</item>
+    </string-array>
 </resources>
